@@ -75,6 +75,28 @@
 /*=========================================================================*/
 
 /*=========================================================================
+    OPERATING MODES AND FILTERS
+    -----------------------------------------------------------------------*/
+
+typedef enum BME280OperatingMode {
+    BME280_OPERATINGMODE_SLEEP      = 0,
+    BME280_OPERATINGMODE_FORCED     = 1,
+    BME280_OPERATINGMODE_NORMAL     = 3
+} BME280OperatingMode;
+
+typedef enum BME280Oversampling {
+    BME280_OVERSAMPLING_SKIPPED     = 0,
+    BME280_OVERSAMPLING_1X          = 1,
+    BME280_OVERSAMPLING_2X          = 2,
+    BME280_OVERSAMPLING_4X          = 3,
+    BME280_OVERSAMPLING_8X          = 4,
+    BME280_OVERSAMPLING_16X         = 5
+} BME280Oversampling;
+
+/*=========================================================================*/
+
+
+/*=========================================================================
     CALIBRATION DATA
     -----------------------------------------------------------------------*/
     typedef struct
@@ -130,7 +152,10 @@ class Adafruit_BME280
     Adafruit_BME280(int8_t cspin);
     Adafruit_BME280(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin);
 
-    bool  begin(uint8_t addr = BME280_ADDRESS);
+    bool begin(uint8_t addr = BME280_ADDRESS);
+    void setOperatingMode(BME280OperatingMode mode);
+    void setOversampling(BME280Oversampling pressure, BME280Oversampling temperature,
+            BME280Oversampling humidity);
     float readTemperature(void);
     float readPressure(void);
     float readHumidity(void);
